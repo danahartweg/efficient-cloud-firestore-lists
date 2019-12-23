@@ -3,5 +3,5 @@ export default function wait(ms: number = 1_500): Promise<void> {
 }
 
 export function waitForCloudFunctionExecution(): Promise<void> {
-  return wait(5_000);
+  return wait(2_000);
 }

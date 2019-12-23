@@ -39,14 +39,23 @@ service cloud.firestore {
     }
 
     match /homesteads/{homesteadId} {
-      allow read: if hasHomesteadAccess(homesteadId);
-      allow update: if hasRoleForResource(getHomesteadMembershipResource(homesteadId), ['owner']);
       allow create: if getUserResource(request.auth.uid).data.ownedHomestead == '';
+      allow update: if hasRoleForResource(getHomesteadMembershipResource(homesteadId), ['owner']);
+
+      match /{document=**} {
+        allow read: if hasHomesteadAccess(homesteadId);
+      }
     }
 
     match /{path=**}/indices/{index} {
       allow get: if isAuthenticated() && (resource.data.parentId == 'root' || hasHomesteadAccess(resource.data.parentId));
       allow list, write: if false;
+    }
+
+    match /plantVarieties/{document=**} {
+      allow read: if (resource.data.homesteadId == '' && isAuthenticated()) || hasHomesteadAccess(resource.data.homesteadId);
+      allow create: if hasHomesteadAccess(request.resource.data.homesteadId);
+      allow update: if ensureUnchangedHomesteadId() && hasHomesteadAccess(resource.data.homesteadId);
     }
 
     match /users/{userId} {

@@ -2,10 +2,14 @@ import * as uuid from 'uuid/v4';
 
 type Collections =
   | 'homesteads'
+  | 'indices'
+  | 'plantVarieties'
   | 'users';
 
 export enum COLLECTIONS {
   HOMESTEADS = 'homesteads',
+  INDICES = 'indices',
+  PLANT_VARIETIES = 'plantVarieties',
   USERS = 'users',
 }
 

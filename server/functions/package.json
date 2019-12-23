@@ -1,5 +1,5 @@
 {
-  "name": "testing-cloud-firestore-cloud-functions",
+  "name": "efficient-cloud-firestore-lists-cloud-functions",
   "engines": {
     "node": "10"
   },

@@ -1,5 +1,5 @@
 {
-  "name": "testing-cloud-firestore",
+  "name": "efficient-cloud-firestore-lists",
   "scripts": {
     "build:functions": "tsc -p ./functions/tsconfig.build.json",
     "deploy:functions": "firebase deploy --only functions",
@@ -8,7 +8,7 @@
     "postinstall": "yarn --cwd './functions' install",
     "execute-tests:functions": "jest ./functions --runInBand",
     "test": "yarn test:functions",
-    "test:functions": "yarn build:functions && firebase emulators:exec --only firestore,functions 'yarn execute-tests:functions' | sed -u -r '/functions:.*(Finished|Beginning)/d'",
+    "test:functions": "yarn build:functions && firebase emulators:exec --only firestore,functions 'yarn execute-tests:functions'",
     "validate:functions": "tsc -p ./functions --noEmit",
     "validate": "yarn validate:functions"
   },
