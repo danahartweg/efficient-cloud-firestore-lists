@@ -639,6 +639,11 @@ firebase-functions@^3.2.0:
     jsonwebtoken "^8.5.1"
     lodash "^4.17.14"
 
+firestore-size@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/firestore-size/-/firestore-size-2.0.4.tgz#08fbfddcba09de78890921213d075f57bd85fa88"
+  integrity sha512-uS6ZJdwXu0gqgUUx11fEhoGNYNAu4zCnW01hi/qlY4lcqcH9KrKPYNaQiEn6xfKuRXQuFm3zl6NS0CJoy+9wlQ==
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"

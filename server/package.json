@@ -3,19 +3,14 @@
   "scripts": {
     "build:functions": "tsc -p ./functions/tsconfig.build.json",
     "deploy:functions": "firebase deploy --only functions",
-    "deploy:rules": "firebase deploy --only firestore",
     "lint:functions": "tslint -p ./functions",
-    "lint:rules": "tslint -p ./rules",
-    "lint": "yarn lint:functions && yarn lint:rules",
+    "lint": "yarn lint:functions",
     "postinstall": "yarn --cwd './functions' install",
     "execute-tests:functions": "jest ./functions --runInBand",
-    "execute-tests:rules": "jest ./rules --runInBand",
-    "test": "yarn test:rules && yarn test:functions",
+    "test": "yarn test:functions",
     "test:functions": "yarn build:functions && firebase emulators:exec --only firestore,functions 'yarn execute-tests:functions' | sed -u -r '/functions:.*(Finished|Beginning)/d'",
-    "test:rules": "firebase emulators:exec --only firestore 'yarn execute-tests:rules'",
     "validate:functions": "tsc -p ./functions --noEmit",
-    "validate:rules": "tsc -p ./rules --noEmit",
-    "validate": "yarn validate:functions && yarn validate:rules"
+    "validate": "yarn validate:functions"
   },
   "dependencies": {
     "@firebase/testing": "^0.13.0",
