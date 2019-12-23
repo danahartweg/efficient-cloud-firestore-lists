@@ -1,0 +1,18 @@
+{
+  "emulators": {
+    "firestore": {
+      "host": "127.0.0.1",
+      "port": "8080"
+    },
+    "functions": {
+      "host": "127.0.0.1",
+      "port": "5001"
+    }
+  },
+  "firestore": {
+    "rules": "rules/firestore.rules"
+  },
+  "functions": {
+    "predeploy": ["yarn build:functions"]
+  }
+}
