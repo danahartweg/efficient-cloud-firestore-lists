@@ -63,6 +63,8 @@ export async function setup(
 }
 
 export async function teardown() {
+  await firebase.clearFirestoreData({ projectId: generateProjectId() });
+
   useRealProjectId = false;
   return Promise.all(firebase.apps().map(app => app.delete()));
 }
