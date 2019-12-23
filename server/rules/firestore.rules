@@ -1,0 +1,56 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // GENERIC //
+
+    function hasRoleForResource(targetResource, targetRoles) {
+      return targetResource.data.role in targetRoles;
+    }
+
+    // USERS //
+
+  	function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserResource(userId) {
+      return get(/databases/$(database)/documents/users/$(userId));
+    }
+
+    // HOMESTEAD //
+
+    function getHomesteadMemberPath(homesteadId) {
+      return /databases/$(database)/documents/homesteads/$(homesteadId)/members/$(request.auth.uid);
+    }
+
+    function getHomesteadMembershipResource(homesteadId) {
+      return get(getHomesteadMemberPath(homesteadId));
+    }
+
+    function hasHomesteadAccess(homesteadId) {
+      return exists(getHomesteadMemberPath(homesteadId));
+    }
+
+    // ROUTES //
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    match /homesteads/{homesteadId} {
+      allow read: if hasHomesteadAccess(homesteadId);
+      allow update: if hasRoleForResource(getHomesteadMembershipResource(homesteadId), ['owner']);
+      allow create: if getUserResource(request.auth.uid).data.ownedHomestead == '';
+    }
+
+    match /{path=**}/indices/{index} {
+      allow get: if isAuthenticated() && (resource.data.parentId == 'root' || hasHomesteadAccess(resource.data.parentId));
+      allow list, write: if false;
+    }
+
+    match /users/{userId} {
+      allow read, update: if request.auth.uid == userId;
+    }
+  }
+}
